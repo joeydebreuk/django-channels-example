@@ -124,7 +124,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Django Channels
-if CONTEXT == "websockets":
+if DEBUG or CONTEXT == "websockets":
     INSTALLED_APPS += ["channels"]
     ASGI_APPLICATION = "websockets.ws_router.router"
     CHANNELS_REDIS_IP = env.str("CHANNELS_REDIS_IP", default="127.0.0.1")

@@ -1,17 +1,20 @@
 import random
+from asgiref.sync import async_to_sync
 from channels.auth import AuthMiddlewareStack
+from channels.layers import get_channel_layer
 from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from django.conf.urls import url
 import json
 
 
-class ChatConsumer(AsyncWebsocketConsumer):
+class ChatConsumer(AsyncJsonWebsocketConsumer):
+    GROUP_NAME = "hardcodedgroup"
+
     async def connect(self):
         self.user = str(random.choice(["Jan", "Kees", "Willem", "Jaap"]))
         print("connect " + str(self.user))
-        self.room_name = "testgroup"  # hardcoded for now
-        self.room_group_name = "chat_%s" % self.room_name
+        self.room_group_name = self.GROUP_NAME
 
         # Join room group
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
@@ -23,10 +26,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
     # Receive message from WebSocket
-    async def receive(self, text_data):
-        print("receive: " + text_data)
-        text_data_json = json.loads(text_data)
-        message = str(self.user) + ": " + text_data_json["message"]
+    async def receive_json(self, data, **kwargs):
+        print("receive: ", data["message"], kwargs)
+        message = str(self.user) + ": " + data["message"]
 
         # Send message to room group
         await self.channel_layer.group_send(
@@ -39,6 +41,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
         print("process received: " + message)
         # Send message to WebSocket
         await self.send(text_data=json.dumps({"message": message}))
+
+
+channel_layer = get_channel_layer()
+
+
+def send_message_to_ws(message: str):
+    async_to_sync(channel_layer.group_send)(ChatConsumer.GROUP_NAME, {
+        "type": "chat_message",
+        "message": message,
+    })
 
 
 urls = [
