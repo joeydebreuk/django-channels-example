@@ -2,3 +2,4 @@ django==2.2.14
 channels==2.4.0
 django-environ
 channels_redis
+django-rest-auth

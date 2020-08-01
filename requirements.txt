@@ -17,7 +17,9 @@ constantly==15.1.0        # via twisted
 cryptography==3.0         # via autobahn, pyopenssl, service-identity
 daphne==2.5.0             # via channels
 django-environ==0.4.5     # via -r requirements.in
-django==2.2.14            # via -r requirements.in, channels
+django-rest-auth==0.9.5   # via -r requirements.in
+django==2.2.14            # via -r requirements.in, channels, django-rest-auth, djangorestframework
+djangorestframework==3.11.0  # via django-rest-auth
 hiredis==1.1.0            # via aioredis
 hyperlink==19.0.0         # via twisted
 idna==2.10                # via hyperlink, twisted
@@ -30,7 +32,7 @@ pyhamcrest==2.0.2         # via twisted
 pyopenssl==19.1.0         # via twisted
 pytz==2020.1              # via django
 service-identity==18.1.0  # via twisted
-six==1.15.0               # via automat, cryptography, pyopenssl
+six==1.15.0               # via automat, cryptography, django-rest-auth, pyopenssl
 sqlparse==0.3.1           # via django
 twisted[tls]==20.3.0      # via daphne
 txaio==20.4.1             # via autobahn

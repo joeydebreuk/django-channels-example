@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.shortcuts import render
-from django.urls import path
+from django.urls import path, include
 
 
 def render_home(request):
@@ -25,4 +25,5 @@ def render_home(request):
 urlpatterns = [
     path('', render_home),
     path('admin/', admin.site.urls),
+    path('rest-auth/', include('rest_auth.urls'))
 ]
