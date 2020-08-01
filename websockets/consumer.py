@@ -6,8 +6,6 @@ from websockets.ws_methods import get_user_group, user_channel_store
 
 
 class Consumer(AsyncJsonWebsocketConsumer):
-    ALL_USERS_GROUP = "ALL_USERS"
-
     """
     Every receiver gets called on "receive_json"
     with the received data.
