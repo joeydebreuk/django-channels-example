@@ -15,16 +15,12 @@ def create_message(payload: [object, list]):
     )
 
 
-def get_user_group(user):
-    return f"USER{user.pk}"
-
-
-def send(group: str, payload: object):
+def send_to_group(group: str, payload: object):
     async_to_sync(get_channel_layer().group_send)(group, create_message(payload))
 
 
 def send_to_user(user, payload: object):
-    send(get_user_group(user), payload)
+    async_to_sync(get_channel_layer().send)(user_channel_store[user.id], create_message(payload))
 
 
 def join_group(group: str, user):

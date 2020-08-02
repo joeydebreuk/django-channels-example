@@ -2,7 +2,7 @@ from functools import wraps
 from threading import Thread
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 import json
-from websockets.ws_methods import get_user_group, user_channel_store
+from websockets.ws_methods import user_channel_store
 
 
 def get_dummy_user():
@@ -48,13 +48,11 @@ class Consumer(AsyncJsonWebsocketConsumer):
         user = self.scope["user"]
         print("connect " + str(user))
         user_channel_store[user.id] = self.channel_name
-        await self.channel_layer.group_add(get_user_group(user), self.channel_name)
         await self.accept()
 
     async def disconnect(self, close_code):
         user = self.scope["user"]
         print(f"disconnect {user}")
-        await self.channel_layer.group_discard(get_user_group(user), self.channel_name)
 
     # Receive message from WebSocket
     async def receive_json(self, payload, **kwargs):

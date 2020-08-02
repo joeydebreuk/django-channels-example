@@ -50,7 +50,7 @@ def handle_chat_message(payload: ChatMessagePayload, scope):
 
 
 def send_message_to_chatroom(chatroom: str, sender: User, message: str):
-    send(chatroom_to_group(chatroom), {
+    send_to_group(chatroom_to_group(chatroom), {
         "message": message,
         "sender": sender.username,
         "type": "group_message"
