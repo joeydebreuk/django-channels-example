@@ -5,6 +5,14 @@ import json
 from websockets.ws_methods import get_user_group, user_channel_store
 
 
+def get_dummy_user():
+    from django.contrib.auth.models import User
+    user = User.objects.first()
+    if user:
+        return user
+    return User.objects.create(username="henkie")
+
+
 class Consumer(AsyncJsonWebsocketConsumer):
     """
     Every receiver gets called on "receive_json"
@@ -34,9 +42,8 @@ class Consumer(AsyncJsonWebsocketConsumer):
         return decorator
 
     async def connect(self):
-        # If you are to lazy to login, uncomment:
-        # from django.contrib.auth.models import User
-        # self.scope["user"] = User.objects.first()
+        if not self.scope["user"].is_authenticated:
+            self.scope["user"] = get_dummy_user()
 
         user = self.scope["user"]
         print("connect " + str(user))
