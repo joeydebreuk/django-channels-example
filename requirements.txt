@@ -14,7 +14,7 @@ cffi==1.14.1              # via cryptography
 channels-redis==3.0.1     # via -r requirements.in
 channels==2.4.0           # via -r requirements.in, channels-redis
 constantly==15.1.0        # via twisted
-cryptography==3.0         # via autobahn, pyopenssl, service-identity
+cryptography==3.2         # via autobahn, pyopenssl, service-identity
 daphne==2.5.0             # via channels
 django-environ==0.4.5     # via -r requirements.in
 django-rest-auth==0.9.5   # via -r requirements.in
