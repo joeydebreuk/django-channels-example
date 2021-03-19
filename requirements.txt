@@ -49,7 +49,7 @@ django==2.2.18
     #   channels
     #   django-rest-auth
     #   djangorestframework
-djangorestframework==3.11.0
+djangorestframework==3.11.2
     # via django-rest-auth
 hiredis==1.1.0
     # via aioredis
