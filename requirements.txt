@@ -18,7 +18,7 @@ attrs==19.3.0
     #   automat
     #   service-identity
     #   twisted
-autobahn==20.7.1
+autobahn==20.12.3
     # via daphne
 automat==20.2.0
     # via twisted
@@ -53,8 +53,10 @@ djangorestframework==3.11.0
     # via django-rest-auth
 hiredis==1.1.0
     # via aioredis
-hyperlink==19.0.0
-    # via twisted
+hyperlink==21.0.0
+    # via
+    #   autobahn
+    #   twisted
 idna==2.10
     # via
     #   hyperlink
